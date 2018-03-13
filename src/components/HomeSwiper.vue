@@ -1,6 +1,13 @@
 <template>
   <div class="homeswiper">
-    <swiper loop auto :list="dataList" :index="0"></swiper>
+    <swiper 
+    loop 
+    auto 
+    :list="dataList" 
+    index="0"
+    :aspect-ratio='425/805'
+    style="width:100%">
+    </swiper>
   </div>
 </template>
 
