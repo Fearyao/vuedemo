@@ -44,9 +44,7 @@
           </group>
         </div>
         <div class="selector">
-          <group>
-            <selector title="所在小区" :options="blockList" v-model="block"></selector>
-          </group>
+          <x-input title="所在小区" v-model="block" @on-blur="blur()"></x-input>
         </div>
         <div class="button" @click="submit()">
           立即预约
@@ -54,19 +52,23 @@
       </div>
     </div>
   </div>
-  </div>
 </template>
 
 
 
 <script>
 import homeswiper from '../components/HomeSwiper';
-import { Selector } from 'vux';
+import { Selector,XInput,Group } from 'vux';
+
+require("es6-promise").polyfill();
+require('isomorphic-fetch');
 
 export default {
   components: {
     homeswiper,
-    Selector
+    Selector,
+    XInput,
+    Group
   },
   data() {
     return {
@@ -98,10 +100,13 @@ export default {
         {value:'绿城',key:1},
         {value:'金城',key:2},
       ],
-      backgroundImg: './static/imgs/vr@3.png'
+      backgroundImg: './static/imgs/vr@3.png',
     }
   },
   methods:{
+    blur(){
+
+    },
     submit(){
       let query={
         type:this.type,
@@ -109,6 +114,11 @@ export default {
         block:this.block
       }
       console.log(query)
+      fetch('http://www.baidu.com',query).then(data=>{
+        console.log(data)
+      },err=>{
+        console.log(err)
+      })
     }
   },
   mounted() {
@@ -169,6 +179,7 @@ export default {
     }
   }
   .bespeake{
+    padding-bottom: 100px;
     background-color: rgb(240, 240, 240);
     text-align: center;
     border: 1px solid transparent;
@@ -187,19 +198,18 @@ export default {
     }
     .form{
       .selector{
-        padding:6px;
         font-size: 16px;
         margin: 20px;
         background-color: white;
       }
       .weui-label{
         text-align: left;
+        min-width: 100px;;
       }
     }
     .button{
       padding:10px 6px;
       margin: 20px;
-      margin-top: 20px;
       font-size: 14px;
       font-family: @fontFamily;
       color: white;

@@ -6,6 +6,12 @@ import VueRouter from 'vue-router'
 import App from './App'
 import router from './router/index'
 
+import Promise from "promise-polyfill";
+
+if (!window.Promise) {
+  window.Promise = Promise;
+}
+
 Vue.use(VueRouter)
 
 FastClick.attach(document.body)
